@@ -2,49 +2,39 @@ class Solution:
     def buddyStrings(self, A: str, B: str) -> bool:
         
         if A == "" or B == "":
+            
             return False
         
-        n1,n2 = len(A),len(B)
+        n1,n2,s = len(A),len(B),set()
         
         if n1 != n2:
-            return False
-        
-        if n1 == 2:
             
-            if A[0] == B[1] and A[1] == B[0]:
-                return True
             return False
-        
-        changes,change = 0,[]
         
         for i,j in enumerate(A):
             
-            if j != B[i]:
+            if B[i] != j:
                 
-                changes += 1
-                if changes > 2:
-                    break
-                change.append(i)
+                c,x = B[i],i+1
                 
-        if changes > 2:
+                while x < n1 and A[x] != c:
+                    
+                    x += 1
+                    
+                if x >= n1:
+                    
+                    return False
+                    
+                if (A[:i] + str(A[x]) + A[i+1:x] + str(j) + A[x+1:]) == B:
+                    
+                    return True
+                
+                return False
             
-            return False
+            s.add(j)
+            
+        if len(s) < n1:
+            
+            return True
         
-        elif changes == 0:
-            
-            d = dict()
-            
-            for i in A:
-                
-                if i in d:
-                    
-                    d[i] += 1
-                    
-                    if d[i] >= 2:
-                        return True
-                    
-                else:
-                    d[i] = 1
-                    
-            return False
-        return True if (A[change[0]] == B[change[1]] and A[change[1]] == B[change[0]]) else False
+        return False
