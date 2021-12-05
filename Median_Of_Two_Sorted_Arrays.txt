@@ -1,0 +1,72 @@
+class Solution {
+    
+    public double getMedianOfTwoSortedArrays(int[] arr1, int n, int[] arr2, int m) {
+        
+        int l = 0, r = n-1, i, j, total = (n+m);
+        
+        int half = total/2, arr1Left, arr1Right, arr2Left, arr2Right;
+        
+        while (true) {
+            
+            i = (int) Math.floor(l + (r - l)/2.0);
+            
+            j = half - i - 2;
+            
+            if (i >= 0)
+                arr1Left = arr1[i];
+            else
+                arr1Left = Integer.MIN_VALUE;
+            
+            if (i+1 < n)
+                arr1Right = arr1[i+1];
+            else
+                arr1Right = Integer.MAX_VALUE;
+            
+            if (j >= 0)
+                arr2Left = arr2[j];
+            else
+                arr2Left = Integer.MIN_VALUE;
+            
+            if (j+1 < m)
+                arr2Right = arr2[j+1];
+            else
+                arr2Right = Integer.MAX_VALUE;
+            
+            if (arr1Left <= arr2Right && arr2Left <= arr1Right) {
+                if (total % 2 == 1)
+                    return (double) Math.min(arr1Right, arr2Right);
+                
+                return ((double)Math.max(arr1Left, arr2Left) + (double)Math.min(arr1Right, arr2Right))/2;
+            } else if (arr1Left > arr2Right) {
+                r = i - 1;
+            } else {
+                l = i + 1;
+            }
+        }
+    }
+    
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        
+        int n = nums1.length, m = nums2.length;
+        
+        if (n == 0) {
+            
+            if (m % 2 == 1)
+                return (double) nums2[m/2];
+            return ((double)nums2[m/2] + (double)nums2[(m-2)/2])/2;
+        }
+        
+        if (m == 0) {
+            
+            if (n % 2 == 1)
+                return (double) nums1[n/2];
+            return ((double)nums1[n/2] + (double)nums1[(n-2)/2])/2;
+        }
+        
+        if (n < m) {
+            return getMedianOfTwoSortedArrays(nums1, n, nums2, m);
+        }
+        
+        return getMedianOfTwoSortedArrays(nums2, m, nums1, n);
+    }
+}

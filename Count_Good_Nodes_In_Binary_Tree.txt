@@ -1,0 +1,28 @@
+class Solution {
+    int answer = 0;
+    
+    public void countGoodNodes(TreeNode root, int maxValFoundOnPath) {
+        
+        if (root == null)
+            return;
+        
+        if (root.val >= maxValFoundOnPath)
+            answer++;
+        
+        countGoodNodes(root.left, Math.max(maxValFoundOnPath, root.val));
+        
+        countGoodNodes(root.right, Math.max(maxValFoundOnPath, root.val));
+    }
+    
+    public int goodNodes(TreeNode root) {
+        
+        if (root == null)
+            return answer;
+        
+        answer = 0;
+        
+        countGoodNodes(root, Integer.MIN_VALUE);
+        
+        return answer;
+    }
+}

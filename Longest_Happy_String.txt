@@ -1,0 +1,35 @@
+public String getLongestHappyString(int a, int b, int c) {
+
+    int total = a + b + c;
+
+    int currA = 0, currB = 0, currC = 0, i = 0;
+
+    StringBuilder result = new StringBuilder("");
+
+    while (i < total) {
+
+        if ((a >= b && a >= c && currA != 2) || (a > 0 && (currB == 2 || currC == 2))) {
+
+            result.append("a");
+            a--;
+            currA++; currB = 0; currC = 0;
+
+        } else if ((b >= a && b >= c && currB != 2) || (b > 0 && (currA == 2 || currC == 2))) {
+
+            result.append("b");
+            b--;
+            currB++; currA = 0; currC = 0;
+
+        } else if ((c >= a && c >= b && currC != 2) || (c > 0 && (currA == 2 || currB == 2))) {
+
+            result.append("c");
+            c--;
+            currC++; currA = 0; currB = 0;
+
+        }
+
+        i++;
+    }
+
+    return result.toString();
+}

@@ -1,0 +1,16 @@
+class Solution {
+    public int arraySign(int[] nums) {
+        
+        int negativeElements = 0;
+        
+        for (int num : nums) {
+            
+            if (num == 0)
+                return num;
+            else if (num < 0)
+                negativeElements++;
+        }
+        
+        return negativeElements % 2 == 0 ? 1 : -1;
+    }
+}
